@@ -401,6 +401,43 @@ export class Fonts {
     return fonts.registered;
   }
 
+  public static registerCustomFont(family: string,
+    ...fontFacesDescriptors: ExcalidrawFontFaceDescriptor[]) {
+
+    const fonts = {
+      registered: new Map<
+        ValueOf<typeof FONT_FAMILY | typeof FONT_FAMILY_FALLBACKS>,
+        { metadata: FontMetadata; fontFaces: ExcalidrawFontFace[] }
+      >(),
+    };
+    const init = (
+      family: string,
+      ...fontFacesDescriptors: ExcalidrawFontFaceDescriptor[]
+    ) => {
+      const fontFamily = Object.entries(FONT_FAMILY).length + 1
+      // @ts-ignore:
+      FONT_FAMILY[family] = fontFamily;
+
+      // default to Excalifont metrics
+      const metadata = FONT_METADATA[FONT_FAMILY.Excalifont];
+
+      Fonts.register.call(fonts, family, metadata, ...fontFacesDescriptors);
+    };
+
+    init(family, ...fontFacesDescriptors);
+
+    if (!Fonts._registered) {
+      Fonts._registered = fonts.registered;
+    } else if (!Fonts._initialized) {
+      // case when host app register fonts before they are lazy loaded
+      // don't override whatever has been previously registered
+      Fonts._registered = new Map([
+        ...fonts.registered.entries(),
+        ...Fonts._registered.entries(),
+      ]);
+    }
+  }
+
   /**
    * Get all the unique font families for the given elements.
    */

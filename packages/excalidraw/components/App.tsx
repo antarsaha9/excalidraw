@@ -787,6 +787,8 @@ class App extends React.Component<AppProps, AppState> {
         onPointerUp: (cb) => this.onPointerUpEmitter.on(cb),
         onScrollChange: (cb) => this.onScrollChangeEmitter.on(cb),
         onUserFollow: (cb) => this.onUserFollowEmitter.on(cb),
+      // @ts-ignore:
+        registerCustomFont: Fonts.registerCustomFont,
       } as const;
       if (typeof excalidrawAPI === "function") {
         excalidrawAPI(api);
