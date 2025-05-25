@@ -428,7 +428,7 @@ export class Fonts {
 
     if (!Fonts._registered) {
       Fonts._registered = fonts.registered;
-    } else if (!Fonts._initialized) {
+    } else  {
       // case when host app register fonts before they are lazy loaded
       // don't override whatever has been previously registered
       Fonts._registered = new Map([
