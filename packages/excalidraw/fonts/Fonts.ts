@@ -414,7 +414,7 @@ export class Fonts {
       family: string,
       ...fontFacesDescriptors: ExcalidrawFontFaceDescriptor[]
     ) => {
-      const fontFamily = Object.entries(FONT_FAMILY).length + 1
+      const fontFamily = Math.max(...Object.values(FONT_FAMILY)) + 1
       // @ts-ignore:
       FONT_FAMILY[family] = fontFamily;
 

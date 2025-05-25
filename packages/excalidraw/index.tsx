@@ -84,7 +84,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
   ) {
     UIOptions.canvasActions.toggleTheme = true;
   }
-
+  
   useEffect(() => {
     const importPolyfill = async () => {
       //@ts-ignore
